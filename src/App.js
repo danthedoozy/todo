@@ -1,5 +1,4 @@
 import React, {useEffect, useContext} from 'react'
-import logo from './logo.svg';
 import './App.css';
 import TaskContext from './contexts/Task'
 import TaskList from './components/TaskList';
@@ -9,6 +8,7 @@ function App() {
   
   useEffect(() => {
     getTasks();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   },[]);
 
   return (

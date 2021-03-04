@@ -11,22 +11,23 @@ function TaskList() {
   const [task, setTask] = useState(emptyTask)
   const { tasks, addTask, updateTask } = useContext(TaskContext);
 
-  const updateCompleted = task => {
-    task.task.completed = !task.task.completed;
-    updateTask(task);
+  const updateCompleted = taskItem => {
+    taskItem.task.completed = !taskItem.task.completed;
+    updateTask(taskItem);
   };
 
   const saveTask = () => {
-    addTask(task).then(() => cancelTask(/*complete the cancel task todo*/))
+    addTask(task).then(() => cancelTask())
   };
 
   const cancelTask = () => {
-    //todo: reset the task state and hide the form
+    setTask(emptyTask);
+    setNewTask(false);
   };
 
   const handleChange = e => {
     const { name, value } = e.target;
-    //todo: update the task state with these variables
+    setTask({ ...task, [name]: value })
   };
 
   return (
@@ -58,11 +59,17 @@ function TaskList() {
           )
         }
         {
-          tasks.map(task => (
-            <tr key={task.id}>
-              <td>{task.task.category}</td>
-              <td>{task.task.name}</td>
-              <td><input type="checkbox" checked={task.task.completed} onChange={() => updateCompleted(task)}/></td>
+          tasks.map(taskItem => (
+            <tr key={taskItem.id}>
+              <td>{taskItem.task.category}</td>
+              <td>{taskItem.task.name}</td>
+              <td>
+                <input
+                  type="checkbox"
+                  checked={taskItem.task.completed}
+                  onChange={() => updateCompleted(taskItem)}
+                />
+              </td>
             </tr>
           ))
         }
